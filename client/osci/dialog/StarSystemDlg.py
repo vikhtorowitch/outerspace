@@ -1198,15 +1198,11 @@ class StarSystemDlg:
             layout = (0, 0, 40, 10)
         )
 
-        ui.Title(self.win, layout = (0, 27, 30, 1), id = 'vStatusBar',
-            align = ui.ALIGN_W)
-        ui.TitleButton(self.win, layout = (35, 27, 5, 1), text = _('Close'),
-            action = 'onCloseDlg')
-        ui.TitleButton(self.win, layout = (30, 27, 5, 1), text = _('Locate'),
-            action = 'onLocateSystem')
+        ui.Title(self.win, layout = (0, 27, 30, 1), id = 'vStatusBar', align = ui.ALIGN_W)
+        ui.TitleButton(self.win, layout = (35, 27, 5, 1), text = _('Close'), action = 'onCloseDlg')
+        ui.TitleButton(self.win, layout = (30, 27, 5, 1), text = _('Locate'), action = 'onLocateSystem')
         ## system
-        ui.Title(self.win, layout = (0, 10, 40, 1), id = 'vSTitle',
-            align = ui.ALIGN_W, font = 'normal-bold', tags = ['sys'])
+        ui.Title(self.win, layout = (0, 10, 40, 1), id = 'vSTitle', align = ui.ALIGN_W, font = 'normal-bold', tags = ['sys'])
         ui.Listbox(self.win, layout = (0, 11, 40, 14), id = 'vSSOver',
             columns = [(_('Planet'), 'text', 5, ui.ALIGN_W), (_('Type'), 'plType', 3.5, ui.ALIGN_W),
             (_('Env'), 'plBio', 1.5, ui.ALIGN_E), (_('Min'), 'plMin', 1.5, ui.ALIGN_E), (_('En'), 'plEn', 1.5, ui.ALIGN_E),
@@ -1239,113 +1235,110 @@ class StarSystemDlg:
             id = 'vSViewMinefield', tags = ['sys'], action = 'onViewMinefield')
         ## planet
         ui.Title(self.win, layout = (0, 10, 20, 1), id = 'vPName',
-            align = ui.ALIGN_W,    font = 'normal-bold', tags = ['pl'])
+            align = ui.ALIGN_W, font = 'normal-bold', tags = ['pl'])
         ui.Title(self.win, layout = (20, 10, 20, 1), text = _('Structures'),
             align = ui.ALIGN_W, font = 'normal-bold', tags = ['pl'])
         ui.ButtonArray(self.win, layout = (20, 11, 20, 6), id = 'vPSlots',
-            buttonSize = (2, 2), showSlider = 0, tags = ['pl'], action = 'onSlotSelected', rmbAction = 'onSlotRSelected', hoverAction = 'onSlotHighlighted')
+            buttonSize = (2, 2), showSlider = 0, tags = ['pl'], action = 'onSlotSelected', rmbAction = 'onSlotRSelected')
         ui.Title(self.win, layout = (20, 17, 12, 1), id = 'vTaskTitleWithQueue', text = _('Task queue'),
             align = ui.ALIGN_W, font = 'normal-bold', tags = ['pl'])
         ui.TitleButton(self.win, layout = (32, 17, 8, 1), id = 'vQueueSelector', align = ui.ALIGN_W, font = 'normal-bold', tags = ['pl'], action = 'onGlobalQueuesMenu')
         ui.Title(self.win, layout = (20, 17, 20, 1), id = 'vTaskTitleNoQueue', text = _('Task queue'),
             align = ui.ALIGN_W, font = 'normal-bold', tags = ['pl'])
+        ui.Title(self.win, layout = (20, 17, 20, 1), text = _('Task queue'),
+            align = ui.ALIGN_W, font = 'normal-bold', tags = ['pl'])
         ui.ButtonArray(self.win, layout = (20, 18, 20, 2), id = 'vPQueue',
-            buttonSize = (2, 2), showSlider = 0, tags = ['pl'], action = 'onQueueItemSelected', hoverAction = 'onQueueItemHighlighted')
+            buttonSize = (2, 2), showSlider = 0, tags = ['pl'], action = 'onQueueItemSelected')
         ui.Label(self.win, layout = (0, 11, 5, 1), text = _('Planet type'),
             align = ui.ALIGN_W, tags = ['pl'])
         ui.Label(self.win, layout = (5, 11, 5, 1), id = 'vPPType',
-            align = ui.ALIGN_E,    tags = ['pl'])
+            align = ui.ALIGN_E, tags = ['pl'])
         ui.Label(self.win, layout = (10, 11, 5, 1), text = _('Diameter'),
             align = ui.ALIGN_W, tags = ['pl'])
         ui.Label(self.win, layout = (15, 11, 5, 1), id = 'vPDiameter',
             align = ui.ALIGN_E, tags = ['pl'])
-        # environment
-        ui.Label(self.win, layout = (0, 12, 5, 2), id = 'vPBioAbund',
-            icons=[(res.getUIIcon('planet_biomatter'), ui.ALIGN_W)],
-            tooltipTitle=_("Environment"),
-            align = ui.ALIGN_NONE, tags = ['pl'])
-        # minerals
-        ui.Label(self.win, layout = (5, 12, 5, 2), id = 'vPMinAbund',
-            icons=[(res.getUIIcon('planet_minerals'), ui.ALIGN_W)],
-            tooltipTitle=_("Mineral abundance"),
-            align = ui.ALIGN_NONE, tags = ['pl'])
-        # en. abundance
-        ui.Label(self.win, layout = (10, 12, 5, 2), id = 'vPEnAbund',
-            icons=[(res.getUIIcon('planet_energy'), ui.ALIGN_W)],
-            tooltipTitle=_("Energy abundance"),
-            align = ui.ALIGN_NONE, tags = ['pl'])
-        # available space
-        ui.Label(self.win, layout = (15, 12, 5, 2), id = 'vPSlotsAbund',
-            icons=[(res.getUIIcon('planet_free_slots'), ui.ALIGN_W)],
-            tooltipTitle=_("Available space"),
-            align = ui.ALIGN_NONE, tags = ['pl'])
+        ui.Label(self.win, layout = (0, 12, 5, 1), text = _('Environment'),
+            align = ui.ALIGN_W, tags = ['pl'])
+        ui.Label(self.win, layout = (5, 12, 5, 1), id = 'vPBioAbund',
+            align = ui.ALIGN_E, tags = ['pl'])
+        ui.Label(self.win, layout = (10, 12, 5, 1), text = _('Min. abundance'),
+            align = ui.ALIGN_W, tags = ['pl'])
+        ui.Label(self.win, layout = (15, 12, 5, 1), id = 'vPMinAbund',
+            align = ui.ALIGN_E, tags = ['pl'])
+        ui.Label(self.win, layout = (0, 13, 6, 1), text = _('En. abundance'),
+            align = ui.ALIGN_W, tags = ['pl'])
+        ui.Label(self.win, layout = (5, 13, 5, 1), id = 'vPEnAbund',
+            align = ui.ALIGN_E, tags = ['pl'])
+        ui.Label(self.win, layout = (10, 13, 5, 1), text = _('Available space'),
+            align = ui.ALIGN_W, tags = ['pl'])
+        ui.Label(self.win, layout = (15, 13, 5, 1), id = 'vPSlotsAbund',
+            align = ui.ALIGN_E, tags = ['pl'])
         ## colony data
         ui.Title(self.win, layout = (0, 14, 20, 1), text = _('Colony data'),
             align = ui.ALIGN_W, font = 'normal-bold', tags = ['pl'])
-        ui.Label(self.win, layout = (0, 15, 5, 2), id = 'vPCPop',
-            icons=[(res.getUIIcon('population'), ui.ALIGN_W)],
-            tooltipTitle=_("Population"),
-            align = ui.ALIGN_NONE, tags = ['pl'])
-        ui.Label(self.win, layout = (5, 15, 5, 2), id = 'vPCUnempl',
-            icons=[(res.getUIIcon('unemployed'), ui.ALIGN_W)],
-            tooltipTitle=_("Free workers"),
-            align = ui.ALIGN_NONE, tags = ['pl'])
-        ui.Label(self.win, layout = (10, 15, 5, 2), id = 'vPCStorBio',
-            icons=[(res.getUIIcon('bio_stored'), ui.ALIGN_W)],
-            tooltipTitle=_("Biomatter"),
-            align = ui.ALIGN_NONE, tags = ['pl'])
-        ui.Label(self.win, layout = (15, 15, 5, 2), id = 'vPCStorEn',
-            icons=[(res.getUIIcon('en_stored'), ui.ALIGN_W)],
-            tooltipTitle=_("Energy"),
-            align = ui.ALIGN_NONE, tags = ['pl'])
+        ui.Label(self.win, layout = (0, 15, 5, 1), text = _('Population'),
+            align = ui.ALIGN_W, tags = ['pl'])
+        ui.Label(self.win, layout = (5, 15, 5, 1), id = 'vPCPop',
+            align = ui.ALIGN_E, tags = ['pl'])
+        ui.Label(self.win, layout = (15, 15, 5, 1), id = 'vPCConsumes',
+            align = ui.ALIGN_E, tags = ['pl'])
+        ui.Label(self.win, layout = (0, 16, 5, 1), text = _('Biomatter'),
+            align = ui.ALIGN_W, tags = ['pl'])
+        ui.Label(self.win, layout = (5, 16, 5, 1), id = 'vPCStorBio',
+            align = ui.ALIGN_E, tags = ['pl'])
+        ui.Label(self.win, layout = (0, 17, 5, 1), text = _('Energy'),
+            align = ui.ALIGN_W, tags = ['pl'])
+        ui.Label(self.win, layout = (5, 17, 5, 1), id = 'vPCStorEn',
+            align = ui.ALIGN_E, tags = ['pl'])
 
-
-        ui.Label(self.win, layout = (0, 18, 7, 2), id = 'vPCProd',
-            icons=[(res.getUIIcon('planet_cp_production'), ui.ALIGN_W)],
-            tooltipTitle=_("Construction pts"),
-            align = ui.ALIGN_NONE, tags = ['pl'])
-        ui.Label(self.win, layout = (7, 18, 7, 2), id = 'vPCSci',
-            icons=[(res.getUIIcon('planet_rp_production'), ui.ALIGN_W)],
-            tooltipTitle=_("Research pts"),
-            align = ui.ALIGN_NONE, tags = ['pl'])
-        ui.Label(self.win, layout = (14, 18, 6, 2), id = 'vPCMorale',
-            icons=[(res.getUIIcon('morale'), ui.ALIGN_W)],
-            tooltipTitle=_("Morale"),
-            align = ui.ALIGN_NONE, tags = ['pl'])
-
-
-        ui.Label(self.win, layout = (0, 21, 7, 2), id = 'vPCEnvStatus',
-            icons=[(res.getUIIcon('environment_status'), ui.ALIGN_W)],
-            tooltipTitle=_("Environment status"),
-            align = ui.ALIGN_NONE, tags = ['pl'])
-        ui.Label(self.win, layout = (7, 21, 7, 2), id = 'vPCShield',
-            icons=[(res.getUIIcon('planetary_shield'), ui.ALIGN_W)],
-            tooltipTitle=_("Planetary shield"),
-            align = ui.ALIGN_NONE, tags = ['pl'])
-        ui.Label(self.win, layout = (14, 21, 6, 2), id = 'vPCSRes',
-            icons=[(res.getUIIcon('strategic_resource'), ui.ALIGN_W)],
-            tooltipTitle=_("Strategic resource"),
-            align = ui.ALIGN_NONE, tags = ['pl'])
-        ui.Button(self.win, layout = (10, 23, 10, 1), text = _('Show Terraforming Data'),
+        ui.Label(self.win, layout = (0, 19, 5, 1), text = _('Free workers'),
+            align = ui.ALIGN_W, tags = ['pl'])
+        ui.Label(self.win, layout = (5, 19, 5, 1), id = 'vPCUnempl',
+            align = ui.ALIGN_E, tags = ['pl'])
+        ui.Label(self.win, layout = (0, 20, 5, 1), text = _('Construction pts'),
+            align = ui.ALIGN_W, tags = ['pl'])
+        ui.Label(self.win, layout = (5, 20, 5, 1), id = 'vPCProd',
+            align = ui.ALIGN_E, tags = ['pl'])
+        ui.Label(self.win, layout = (0, 21, 5, 1), text = _('Research pts'),
+            align = ui.ALIGN_W, tags = ['pl'])
+        ui.Label(self.win, layout = (5, 21, 5, 1), id = 'vPCSci',
+            align = ui.ALIGN_E, tags = ['pl'])
+        ui.Label(self.win, layout = (0, 22, 5, 1), text = _('Env. status'),
+            align = ui.ALIGN_W, tags = ['pl'])
+        ui.Label(self.win, layout = (5, 22, 5, 1), id = 'vPCEnvStatus',
+            align = ui.ALIGN_E, tags = ['pl'])
+        ui.Label(self.win, layout = (10, 20, 5, 1), text = _('Strat. resource'),
+            align = ui.ALIGN_W, tags = ['pl'])
+        ui.Label(self.win, layout = (15, 20, 5, 1), id = 'vPCSRes',
+            align = ui.ALIGN_E, tags = ['pl'])
+        ui.Label(self.win, layout = (10, 19, 5, 1), text = _('Morale'),
+            align = ui.ALIGN_W, tags = ['pl'])
+        ui.Label(self.win, layout = (15, 19, 5, 1), id = 'vPCMorale',
+            align = ui.ALIGN_E, tags = ['pl'])
+        ui.Label(self.win, layout = (10, 21, 5, 1), text = _('Planetary shield'),
+            align = ui.ALIGN_W, tags = ['pl'])
+        ui.Label(self.win, layout = (15, 21, 5, 1), id = 'vPCShield',
+            align = ui.ALIGN_E, tags = ['pl'])
+        ui.Button(self.win, layout = (10, 22, 10, 1), text = _('Show Terraforming Data'),
             tags = ['pl'], action = 'onTerraformDataSelect')
         ui.Title(self.win, layout = (0, 24, 20, 1), text = _('System data'),
             align = ui.ALIGN_W, font = 'normal-bold', tags = ['pl'])
-        ui.Label(self.win, layout = (0, 25, 5, 2), id = 'vSTPBio',
-            icons=[(res.getUIIcon('system_biomatter'), ui.ALIGN_W)],
-            tooltipTitle=_("Net Bio +/-"),
-            align = ui.ALIGN_NONE, tags = ['pl'])
-        ui.Label(self.win, layout = (5, 25, 5, 2), id = 'vSTPEn',
-            icons=[(res.getUIIcon('system_energy'), ui.ALIGN_W)],
-            tooltipTitle=_("Net Energy +/-"),
-            align = ui.ALIGN_NONE, tags = ['pl'])
-        ui.Label(self.win, layout = (10, 25, 5, 2), id = 'vSTPProd',
-            icons=[(res.getUIIcon('system_cp_production'), ui.ALIGN_W)],
-            tooltipTitle=_("Net Construction"),
-            align = ui.ALIGN_NONE, tags = ['pl'])
-        ui.Label(self.win, layout = (15, 25, 5, 2), id = 'vSTPSci',
-            icons=[(res.getUIIcon('system_rp_production'), ui.ALIGN_W)],
-            tooltipTitle=_("Net Research"),
-            align = ui.ALIGN_NONE, tags = ['pl'])
+        ui.Label(self.win, layout = (0, 25, 5, 1), text = _('Net Bio +/-'),
+            align = ui.ALIGN_W, tags = ['pl'])
+        ui.Label(self.win, layout = (5, 25, 5, 1), id = 'vSTPBio',
+            align = ui.ALIGN_E, tags = ['pl'])
+        ui.Label(self.win, layout = (10, 25, 5, 1), text = _('Net Energy +/-'),
+            align = ui.ALIGN_W, tags = ['pl'])
+        ui.Label(self.win, layout = (15, 25, 5, 1), id = 'vSTPEn',
+            align = ui.ALIGN_E, tags = ['pl'])
+        ui.Label(self.win, layout = (0, 26, 5, 1), text = _('Net Construction'),
+            align = ui.ALIGN_W, tags = ['pl'])
+        ui.Label(self.win, layout = (5, 26, 5, 1), id = 'vSTPProd',
+            align = ui.ALIGN_E, tags = ['pl'])
+        ui.Label(self.win, layout = (10, 26, 5, 1), text = _('Net Research'),
+            align = ui.ALIGN_W, tags = ['pl'])
+        ui.Label(self.win, layout = (15, 26, 5, 1), id = 'vSTPSci',
+            align = ui.ALIGN_E, tags = ['pl'])
         ## info
         ui.Title(self.win, layout = (20, 20, 20, 1), id = 'vITitle',
             align = ui.ALIGN_W, font = 'normal-bold', tags = ['pl'])
