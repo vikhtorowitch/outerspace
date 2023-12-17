@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+  server:
+    image: outerspace-image
+    container_name: outerspace
+    restart: always
+    volumes:
+     - "./home:/home/appuser"
+    ports:
+      - "9080:9080"

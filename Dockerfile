@@ -1,5 +1,5 @@
 # For more information, please refer to https://aka.ms/vscode-docker-python
-FROM python:2.7.9-slim
+FROM python:2.7.18-alpine3.11
 
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -14,13 +14,6 @@ RUN python -m pip install -r requirements.txt
 WORKDIR /app
 COPY . /app
 
-RUN chmod +x turn.sh
-
-#Install Cron
-RUN /bin/cp -rf patch/sources.list /etc/apt/sources.list
-RUN apt-get update
-RUN apt-get -o Dpkg::Options::="--force-overwrite" install -y cron --force-yes
-
 # Creates a non-root user with an explicit UID and adds permission to access the /app folder
 # For more info, please refer to https://aka.ms/vscode-docker-python-configure-containers
 RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
@@ -28,14 +21,7 @@ USER appuser
 
 RUN chmod +x turn.sh
 
-# Add the cron job
-RUN crontab -l | { cat; echo "@hourly bash /app/turn.sh"; } | crontab -
+# Uncomment to run without compose
+#EXPOSE 9080
 
-EXPOSE 9080
-
-# Create a new galaxy and start time
-#RUN python2 ./tools/osclient_cli.py --newgalaxy=Alpha Circle3CP admin
-#RUN python2 ./tools/osclient_cli.py --starttime admin
-
-CMD cron
-CMD ["python2", "./outerspace.py", "server"]
+CMD ["python2","./outerspace.py","server"]
