@@ -21,6 +21,9 @@ import types
 
 from IDataHolder import IDataHolder
 import zlib, string
+from ige import log
+import json
+from collections import namedtuple
 
 __all__ = ('EncodeException', 'DecodeException', 'IPacket', 'IMarshal')
 
@@ -55,14 +58,19 @@ class IMarshal:
 
     def encode(self, data, version = "V20"):
         if version == "V20":
-            return "V20%s" % zlib.compress(pickle.dumps(data, 1))
+            compressed = json.dumps(data, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+            log.debug('encode', compressed)
+            return "V20%s" % zlib.compress(compressed)
         else:
             raise EncodeException("Cannot handle version %s." % version)
 
     def decode(self, str):
         prefix = str[:3]
         if prefix == u'V20':
-            data = pickle.loads(zlib.decompress(str[3:]))
+            decompressed = zlib.decompress(str[3:])
+            log.debug('decompressed', decompressed)
+            data = json.loads(decompressed, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
+            log.debug('dejsoned', data)
         else:
             raise DecodeException('Cannot handle version %s [message: %s]' % (prefix, str))
         return data
