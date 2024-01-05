@@ -91,7 +91,7 @@ class Window(MetaWidget):
             changed = self.surface.get_rect()
             self._fullUpdate = False
         if surface and changed:
-            surface.blit(self.surface, self.rect.topleft)
+            surface.blit(self.surface, self.rect.topleft, special_flags = pygame.BLEND_ALPHA_SDL2)
             changed.move_ip(self.rect.topleft)
         return changed
 

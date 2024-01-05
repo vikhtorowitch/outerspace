@@ -272,30 +272,30 @@ def drawBox(surface, widget, style):
     l, t, r, b = box.margins
     oldClip = surface.get_clip()
     # corners
-    surface.blit(box.topleft, rect.topleft)
-    surface.blit(box.topright, (rect.right - r, rect.top))
-    surface.blit(box.bottomleft, (rect.left, rect.bottom - b))
-    surface.blit(box.bottomright, (rect.right - r, rect.bottom - b))
+    surface.blit(box.topleft, rect.topleft, special_flags = pygame.BLEND_ALPHA_SDL2)
+    surface.blit(box.topright, (rect.right - r, rect.top), special_flags = pygame.BLEND_ALPHA_SDL2)
+    surface.blit(box.bottomleft, (rect.left, rect.bottom - b), special_flags = pygame.BLEND_ALPHA_SDL2)
+    surface.blit(box.bottomright, (rect.right - r, rect.bottom - b), special_flags = pygame.BLEND_ALPHA_SDL2)
     # center
     surface.set_clip(rect.left + l, rect.top + t, rect.width - l - r, rect.height - t - b)
     w, h = box.center.get_size()
     for x in xrange(rect.left + l, rect.left + rect.width - r -l, w):
         for y in xrange(rect.top + t, rect.top + rect.height - t - b, h):
-            surface.blit(box.center, (x, y))
+            surface.blit(box.center, (x, y), special_flags = pygame.BLEND_ALPHA_SDL2)
     # top + bottom
     surface.set_clip(rect.left + l, rect.top, rect.width - l - r, rect.height)
     w = box.top.get_width()
     y1 = rect.top
     y2 = rect.bottom - b
     for x in xrange(rect.left + l, rect.left + rect.width - r - l, w):
-        surface.blit(box.top, (x, y1))
-        surface.blit(box.bottom, [x, y2])
+        surface.blit(box.top, (x, y1), special_flags = pygame.BLEND_ALPHA_SDL2)
+        surface.blit(box.bottom, [x, y2], special_flags = pygame.BLEND_ALPHA_SDL2)
     # left + right
     surface.set_clip(rect.left, rect.top + t, rect.width, rect.height - t - b)
     h = box.left.get_height()
     for y in xrange(rect.top + t, rect.top + rect.height - t - b + h, h):
-        surface.blit(box.left, (rect.left, y))
-        surface.blit(box.right, (rect.right - r, y))
+        surface.blit(box.left, (rect.left, y), special_flags = pygame.BLEND_ALPHA_SDL2)
+        surface.blit(box.right, (rect.right - r, y), special_flags = pygame.BLEND_ALPHA_SDL2)
     # restore
     surface.set_clip(oldClip)
 
@@ -322,7 +322,7 @@ def drawTextAndIcons(surface, widget, style):
             if align & Const.ALIGN_N: pass
             elif align & Const.ALIGN_S: r.top += rect.height - img.get_height()
             else: r.top += (rect.height - img.get_height()) / 2
-            surface.blit(img, r)
+            surface.blit(img, r, special_flags = pygame.BLEND_ALPHA_SDL2)
     # text
     if widget.text != None:
         font = widget.font or themeDefaultFont
@@ -337,7 +337,7 @@ def drawTextAndIcons(surface, widget, style):
         if widget.align & Const.ALIGN_N: pass
         elif widget.align & Const.ALIGN_S: r.top += rect.height - img.get_height()
         else: r.top += (rect.height - img.get_height()) / 2
-        surface.blit(img, r)
+        surface.blit(img, r, special_flags = pygame.BLEND_ALPHA_SDL2)
     surface.set_clip(oldClip)
 
 
@@ -495,7 +495,7 @@ def drawTitleButton(surface, widget):
             if align & Const.ALIGN_N: r.top += 1
             elif align & Const.ALIGN_S: r.top += rect.height - img.get_height()
             else: r.top += (rect.height - img.get_height()) / 2
-            surface.blit(img, r)
+            surface.blit(img, r, special_flags = pygame.BLEND_ALPHA_SDL2)
     # text
     if widget.text != None:
         if widget.pressed:
@@ -508,7 +508,7 @@ def drawTitleButton(surface, widget):
         if widget.align & Const.ALIGN_N: r.top += 2
         elif widget.align & Const.ALIGN_S: r.top += rect.height - img.get_height() - 1
         else: r.top += (rect.height - img.get_height()) / 2
-        surface.blit(img, r)
+        surface.blit(img, r, special_flags = pygame.BLEND_ALPHA_SDL2)
     surface.set_clip(oldClip)
 
 def drawTitle(surface, widget):
@@ -535,7 +535,7 @@ def drawTitle(surface, widget):
             if align & Const.ALIGN_N: r.top += 1
             elif align & Const.ALIGN_S: r.top += rect.height - img.get_height()
             else: r.top += (rect.height - img.get_height()) / 2
-            surface.blit(img, r)
+            surface.blit(img, r, special_flags = pygame.BLEND_ALPHA_SDL2)
     # text
     if widget.text != None:
         img = Fonts.renderText(font, widget.text, 1, foreground)
@@ -546,7 +546,7 @@ def drawTitle(surface, widget):
         if widget.align & Const.ALIGN_N: r.top += 2
         elif widget.align & Const.ALIGN_S: r.top += rect.height - img.get_height() - 1
         else: r.top += (rect.height - img.get_height()) / 2
-        surface.blit(img, r)
+        surface.blit(img, r, special_flags = pygame.BLEND_ALPHA_SDL2)
     surface.set_clip(oldClip)
 
 def drawEntry(surface, widget):
@@ -609,7 +609,7 @@ def drawEntry(surface, widget):
     else:
         r.top += (rect.height - img.get_height()) / 2
 
-    surface.blit(img, r)
+    surface.blit(img, r, special_flags = pygame.BLEND_ALPHA_SDL2)
 
     if widget.focused and widget.app.cursorOn:
         offset = Fonts.getTextSize(font, textToCursor)
@@ -644,7 +644,7 @@ def drawDecoratedWindow(surface, window):
             for y in xrange(r.top, r.bottom, 2):
                 pygame.draw.line(surface, themeTitleLine2, (x1, y), (x2, y), 1)
         r.move_ip(3, (r.height - text.get_height()) / 2)
-        surface.blit(text, r)
+        surface.blit(text, r, special_flags = pygame.BLEND_ALPHA_SDL2)
         wa.top += r.height
         wa.height -= r.height
     # lines around the window
@@ -841,7 +841,7 @@ def drawTooltip(surface, widget):
         surface.fill(themeBackground, title_r)
         pygame.draw.lines(surface, themeForeground, 0,
             (title_r.bottomleft, title_r.topleft, title_r.topright, title_r.bottomright))
-        surface.blit(title_img, title_text_r)
+        surface.blit(title_img, title_text_r, special_flags = pygame.BLEND_ALPHA_SDL2)
 
     # body
     if text_images:
@@ -849,7 +849,7 @@ def drawTooltip(surface, widget):
         pygame.draw.lines(surface, themeForeground, 0,
             (body_r.topright, body_r.bottomright, body_r.bottomleft, body_r.topleft))
         for img in text_images:
-            surface.blit(img, body_text_r)
+            surface.blit(img, body_text_r, special_flags = pygame.BLEND_ALPHA_SDL2)
             body_text_r.top += img.get_height()
             body_text_r.height -= img.get_height()
 
@@ -975,7 +975,7 @@ def drawText(surface, widget):
             previous_width = img.get_width()
             newX = x + previous_width
 
-            surface.blit(img, (x, y))
+            surface.blit(img, (x, y), special_flags = pygame.BLEND_ALPHA_SDL2)
             column += 1
             charIdx += 1
 

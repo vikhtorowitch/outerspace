@@ -751,7 +751,7 @@ class StarMap(object):
                 w, h = img.get_size()
                 x = sx - w / 2
                 y = sy - h / 2
-                mapSurf.blit(img, (x, y))
+                mapSurf.blit(img, (x, y), special_flags = pygame.BLEND_ALPHA_SDL2)
                 # images are now smaller - TODO fix images of stars
                 w = 22
                 h = 22
@@ -759,14 +759,14 @@ class StarMap(object):
                     if self.overlayMode != gdata.OVERLAY_OWNER:
                         namecolor = res.fadeColor(namecolor)
                     img = Fonts.renderText(self.textSize, name, 1, namecolor)
-                    mapSurf.blit(img, (sx - img.get_width() / 2, sy + h / 2))
+                    mapSurf.blit(img, (sx - img.get_width() / 2, sy + h / 2), special_flags = pygame.BLEND_ALPHA_SDL2)
                 buoy = self.getBuoy(objID)
                 if buoy != None and not self.control_modes['alternative_mode']:
                     if not name: #if name not set and there is a bouy, set "?" as the name
                         if self.overlayMode != gdata.OVERLAY_OWNER:
                             namecolor = res.fadeColor(namecolor)
                         img = Fonts.renderText(self.textSize, '[ ? ]', 1, namecolor)
-                        mapSurf.blit(img, (sx - img.get_width() / 2, sy + h / 2))
+                        mapSurf.blit(img, (sx - img.get_width() / 2, sy + h / 2), special_flags = pygame.BLEND_ALPHA_SDL2)
                         nSy = sy + h / 2 + img.get_height()
                     nSy = sy + h / 2 + img.get_height()
                     lines = buoy[0].split("\n")
@@ -783,7 +783,7 @@ class StarMap(object):
                             bouycolor = res.fadeColor(buoyColors[buoy[1] - 1])
                         img = Fonts.renderText(self.textSize, line, 1, bouycolor)
                         maxW = max(img.get_width(), maxW)
-                        mapSurf.blit(img, (sx - img.get_width() / 2, nSy + hh))
+                        mapSurf.blit(img, (sx - img.get_width() / 2, nSy + hh), special_flags = pygame.BLEND_ALPHA_SDL2)
                         hh += img.get_height()
                     if maxW > 0:
                         actRect = pygame.Rect(sx - maxW / 2, nSy, maxW, hh)
@@ -794,12 +794,12 @@ class StarMap(object):
                     nSy = sy + h / 2 + img.get_height()
                     if constPoints != 0 or sciPoints != 0:
                         img = Fonts.renderText(self.textSize, u"CP: %d RP: %d" % (constPoints, sciPoints), 1, namecolor)
-                        mapSurf.blit(img, (sx - img.get_width() / 2, nSy))
+                        mapSurf.blit(img, (sx - img.get_width() / 2, nSy), special_flags = pygame.BLEND_ALPHA_SDL2)
                     if isGovCentral:
                         img = Fonts.renderText(self.textSize, u"Central system", 1, (255, 255, 255))
-                        mapSurf.blit(img, (sx - img.get_width() / 2, nSy + img.get_height()))
+                        mapSurf.blit(img, (sx - img.get_width() / 2, nSy + img.get_height()), special_flags = pygame.BLEND_ALPHA_SDL2)
                 for icon in icons:
-                    mapSurf.blit(icon, (x, y))
+                    mapSurf.blit(icon, (x, y), special_flags = pygame.BLEND_ALPHA_SDL2)
                     x += icon.get_width() + 1
                 # active rectangle
                 actRect = pygame.Rect(sx - w / 2, sy - h / 2, w, h)
@@ -817,7 +817,7 @@ class StarMap(object):
                     if self.overlayMode != gdata.OVERLAY_OWNER:
                         namecolor = res.fadeColor(namecolor)
                     img = Fonts.renderText(self.textSize, name, 1, namecolor)
-                    mapSurf.blit(img, (sx - img.get_width() / 2, sy + 6 / 2))
+                    mapSurf.blit(img, (sx - img.get_width() / 2, sy + 6 / 2), special_flags = pygame.BLEND_ALPHA_SDL2)
                     buoy = self.getBuoy(objID)
                     if buoy != None:
                         lines = buoy[0].split("\n")
@@ -829,7 +829,7 @@ class StarMap(object):
                                 break
                             img = Fonts.renderText(self.textSize, line, 1, buoyColors[buoy[1] - 1])
                             maxW = max(img.get_width(), maxW)
-                            mapSurf.blit(img, (sx - img.get_width() / 2, nSy + hh))
+                            mapSurf.blit(img, (sx - img.get_width() / 2, nSy + hh), special_flags = pygame.BLEND_ALPHA_SDL2)
                             hh += img.get_height()
                         if maxW > 0:
                             actRect = pygame.Rect(sx - maxW / 2, nSy, maxW, hh)
@@ -949,7 +949,7 @@ class StarMap(object):
                     (actRect.midleft, actRect.midtop, actRect.midright, actRect.midbottom), 0)
                 if eta and scale > 15:
                     img = Fonts.renderText(self.textSize, eta, 1, color)
-                    mapSurf.blit(img, actRect.topright)
+                    mapSurf.blit(img, actRect.topright, special_flags = pygame.BLEND_ALPHA_SDL2)
                 actRect.move_ip(self.rect.left, self.rect.top)
                 self._actAreas[objID] = actRect
 
@@ -977,7 +977,7 @@ class StarMap(object):
                     pygame.draw.circle(mapSurf, moraleColor, (centralX, centralY), radius, 1)
                     text = Fonts.renderText(self.textSize, step, 1, moraleColor)
                     #maxW = max(text.get_width(), maxW)
-                    mapSurf.blit(text, (centralX + radius, centralY))
+                    mapSurf.blit(text, (centralX + radius, centralY), special_flags = pygame.BLEND_ALPHA_SDL2)
 
 
 
@@ -999,7 +999,7 @@ class StarMap(object):
                     (x, rect.top), (x, rect.bottom), 1)
                 if self.control_modes['map_grid_coords']:
                     textSrfc = Fonts.renderText(self.textSize, int(value), 1, (0x70, 0x70, 0x80))
-                    mapSurf.blit(textSrfc, (x + 2, rect.height - textSrfc.get_height()))
+                    mapSurf.blit(textSrfc, (x + 2, rect.height - textSrfc.get_height()), special_flags = pygame.BLEND_ALPHA_SDL2)
             else:
                 pygame.draw.line(mapSurf, (0x33, 0x33, 0x66),
                     (x, rect.top), (x, rect.bottom), 1)
@@ -1013,7 +1013,7 @@ class StarMap(object):
                 pygame.draw.line(mapSurf, (0x00, 0x00, 0x90),
                     (rect.left, yScrn), (rect.right, yScrn), 1)
                 textSrfc = Fonts.renderText(self.textSize, int(value), 1, (0x70, 0x70, 0x80))
-                mapSurf.blit(textSrfc, (0, yScrn))
+                mapSurf.blit(textSrfc, (0, yScrn), special_flags = pygame.BLEND_ALPHA_SDL2)
             else:
                 pygame.draw.line(mapSurf, (0x33, 0x33, 0x66),
                     (rect.left, yScrn), (rect.right, yScrn), 1)

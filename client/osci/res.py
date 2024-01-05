@@ -93,10 +93,10 @@ def loadResources(progress_dlg=None):
         imgID = int(name)
         techImgs[imgID] = pygame.image.load(filename).convert_alpha()
         copyImg = techImgs[imgID].convert_alpha()
-        copyImg.blit(white, (0, 0))
+        copyImg.blit(white, (0, 0), special_flags = pygame.BLEND_ALPHA_SDL2)
         techImgs[imgID + whiteShift] = copyImg
         copyImg = techImgs[imgID].convert_alpha()
-        copyImg.blit(red, (0, 0))
+        copyImg.blit(red, (0, 0), special_flags = pygame.BLEND_ALPHA_SDL2)
         techImgs[imgID + redShift] = copyImg
         curr += 1
         updateProgress(curr, progress_dlg)

@@ -117,15 +117,15 @@ class SystemMapWidget(Widget):
         if self.my_mines:
             if self.unknown_mines:
                 textSrfc = Fonts.renderText('small', 'Minefield', 1, res.getFFColorCode(1250))
-                surface.blit(textSrfc, (x, self.rect.top + textSrfc.get_height()))
+                surface.blit(textSrfc, (x, self.rect.top + textSrfc.get_height()), special_flags = pygame.BLEND_ALPHA_SDL2)
                 textSrfc = Fonts.renderText('small', 'Unknown Minefield Detected', 1, res.getFFColorCode(0))
-                surface.blit(textSrfc, (x, self.rect.top + textSrfc.get_height()*2 + 5))
+                surface.blit(textSrfc, (x, self.rect.top + textSrfc.get_height()*2 + 5), special_flags = pygame.BLEND_ALPHA_SDL2)
             else:
                 textSrfc = Fonts.renderText('small', 'Minefield', 1, res.getFFColorCode(1250))
-                surface.blit(textSrfc, (x, self.rect.top + textSrfc.get_height()))
+                surface.blit(textSrfc, (x, self.rect.top + textSrfc.get_height()), special_flags = pygame.BLEND_ALPHA_SDL2)
         elif self.unknown_mines:
             textSrfc = Fonts.renderText('small', 'Unknown Minefield Detected', 1, res.getFFColorCode(0))
-            surface.blit(textSrfc, (x, self.rect.top + textSrfc.get_height()))
+            surface.blit(textSrfc, (x, self.rect.top + textSrfc.get_height()), special_flags = pygame.BLEND_ALPHA_SDL2)
         # buoy
         if self.buoytext:
             lines = self.buoytext[0].split("\n")
@@ -148,27 +148,27 @@ class SystemMapWidget(Widget):
                 if i > MAX_BOUY_DISPLAY_ROWS: break
             for textSrfc in textSrfcs:
                 hh += textSrfc.get_height()
-                surface.blit(textSrfc, (r - maxW - 20, 5 + hh))
+                surface.blit(textSrfc, (r - maxW - 20, 5 + hh), special_flags = pygame.BLEND_ALPHA_SDL2)
         # star
         if self._starImg:
-            surface.blit(self._starImg, self.rect.topleft)
+            surface.blit(self._starImg, self.rect.topleft, special_flags = pygame.BLEND_ALPHA_SDL2)
             self._actAreas[self.systemID] = pygame.Rect(self.rect.topleft, self._starImg.get_size())
         # planets
         for planetID, img, name, ffColor in self._planetImgs:
             planet = client.get(planetID, noUpdate = 1)
             py = y - img.get_height() / 2
-            surface.blit(img, (x, py))
+            surface.blit(img, (x, py), special_flags = pygame.BLEND_ALPHA_SDL2)
             self._actAreas[planetID] = pygame.Rect((x, py), img.get_size())
             text = pygame.transform.rotate(Fonts.renderText('small', ' %s' % name, 1, ffColor), 90)
             py = height - text.get_height()
             px = x + img.get_width() / 2 - text.get_width() / 2
             nameWidth = text.get_width()
-            surface.blit(text, (px, py))
+            surface.blit(text, (px, py), special_flags = pygame.BLEND_ALPHA_SDL2)
             if getattr(planet, 'owner', Const.OID_NONE) == player.oid:
                 text = pygame.transform.rotate(Fonts.renderText('small', ' (%d)' % self.getFreeSlots(planetID), 1, ffColor), 90)
                 py = height - text.get_height()
                 px = x + img.get_width() / 2 - text.get_width() / 2 + nameWidth
-                surface.blit(text, (px, py))
+                surface.blit(text, (px, py), special_flags = pygame.BLEND_ALPHA_SDL2)
             if planetID in [self.activeObjID, self.selectedObjID]:
                 if planetID == self.selectedObjID: style = 0
                 elif planetID == self.activeObjID: style = 2

@@ -113,7 +113,7 @@ class MetaWidget(Widget):
                 # area is invisible
                 return
             self._widgetSurface = pygame.Surface(self._widgetArea.size)
-            self._widgetSurface.blit(surface, (0,0), self._widgetArea)
+            self._widgetSurface.blit(surface, (0,0), self._widgetArea, special_flags = pygame.BLEND_ALPHA_SDL2)
             # force to redraw all widgets
             #@print self.__class__, 'FORCE REDRAW'
             for widget in self.widgets:
@@ -138,7 +138,7 @@ class MetaWidget(Widget):
                 widget.__dict__['_changeReported'] = 0
             self.__dict__['redrawWidgets'] = {}
             if changed:
-                surface.blit(self._widgetSurface, changed.move(self._widgetArea.topleft), changed)
+                surface.blit(self._widgetSurface, changed.move(self._widgetArea.topleft), changed, special_flags = pygame.BLEND_ALPHA_SDL2)
                 changed.move_ip(self._widgetArea.topleft)
             #@print "Changed", changed
             return changed

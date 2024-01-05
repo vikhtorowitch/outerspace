@@ -122,7 +122,7 @@ class MiniMap:
         self._repaintRect = False
         # blit map
         rect = pygame.Rect(startX, startY, self._width, self._height)
-        surface.blit(self._mapSurf, rect)
+        surface.blit(self._mapSurf, rect, special_flags = pygame.BLEND_ALPHA_SDL2)
         return rect
 
     def needRect(self):

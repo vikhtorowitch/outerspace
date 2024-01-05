@@ -294,7 +294,7 @@ class Application:
     def draw(self, surface):
         """Draw all windows onto supplied surface."""
         if self.showBackground:
-            surface.blit(self.background, (0, 0))
+            surface.blit(self.background, (0, 0), special_flags = pygame.BLEND_ALPHA_SDL2)
         changed = []
         #@print "App Draw"
         for window in self.windows:

@@ -85,22 +85,22 @@ def defineBackground():
     font.set_bold(1)
     color = 0x40, 0x70, 0x40
     #
-    surface.blit(background, backgroundOffset)
+    surface.blit(background, backgroundOffset, special_flags = pygame.BLEND_ALPHA_SDL2)
     # screen.fill((0x00, 0x00, 0x00))
     # OSCI version
     img = font.render(_('Outer Space %s') % ige.version.versionString, 1, color)
-    surface.blit(img, (5, surface.get_height() - 4 * img.get_height() - 5))
+    surface.blit(img, (5, surface.get_height() - 4 * img.get_height() - 5), special_flags = pygame.BLEND_ALPHA_SDL2)
     # Pygame version
     img = font.render(_('Pygame %s') % pygame.version.ver, 1, color)
-    surface.blit(img, (5, surface.get_height() - 3 * img.get_height() - 5))
+    surface.blit(img, (5, surface.get_height() - 3 * img.get_height() - 5), special_flags = pygame.BLEND_ALPHA_SDL2)
     # Python version
     img = font.render(_('Python %s') % sys.version, 1, color)
-    surface.blit(img, (5, surface.get_height() - 2 * img.get_height() - 5))
+    surface.blit(img, (5, surface.get_height() - 2 * img.get_height() - 5), special_flags = pygame.BLEND_ALPHA_SDL2)
     # Video driver
     w, h = pygame.display.get_surface().get_size()
     d = pygame.display.get_surface().get_bitsize()
     img = font.render(_('Video Driver: %s [%dx%dx%d]') % (pygame.display.get_driver(), w, h, d), 1, color)
-    surface.blit(img, (5, surface.get_height() - 1 * img.get_height() - 5))
+    surface.blit(img, (5, surface.get_height() - 1 * img.get_height() - 5), special_flags = pygame.BLEND_ALPHA_SDL2)
     return surface
 
 # update function
@@ -110,7 +110,7 @@ def update():
         img = osci.res.cmdInProgressImg
         wx, wy = gdata.screen.get_size()
         x, y = img.get_size()
-        gdata.screen.blit(img, (wx - x, 0))
+        gdata.screen.blit(img, (wx - x, 0), special_flags = pygame.BLEND_ALPHA_SDL2)
         rects.append(pygame.Rect(wx - x, 0, img.get_width(), img.get_height()))
     pygame.display.update(rects)
     pygame.event.pump()

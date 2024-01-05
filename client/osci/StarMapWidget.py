@@ -156,7 +156,7 @@ class StarMapWidget(Widget):
             self.drawHotbuttons(mapSurf)
             self.repaintHotbuttons = 0
         # blit cached map
-        surface.blit(mapSurf, self.rect)
+        surface.blit(mapSurf, self.rect, special_flags = pygame.BLEND_ALPHA_SDL2)
         self._mapSurf = mapSurf
 
         if self.control_modes['minimap']:
@@ -192,11 +192,11 @@ class StarMapWidget(Widget):
             img = res.getButton(button[0],button[1])
             if (button[1] and not (self._tempOverlayHotbutton and self._tempOverlayHotbutton == button[0])) or (not button[1] and self._tempOverlayHotbutton and self._tempOverlayHotbutton == button[0]):
                 pygame.draw.rect(mapSurf,(0x90, 0x90, 0x90),(left+button[2]-1,top+15+button[3]-1,button[4]+2,button[5]+2),1)
-            mapSurf.blit(img,(left+button[2],top+15+button[3]))
+            mapSurf.blit(img,(left+button[2],top+15+button[3]), special_flags = pygame.BLEND_ALPHA_SDL2)
         if self._tempOverlayHotbutton:
             text = self._hotbuttons[self._tempOverlayHotbutton][7]
             textSrfc = Fonts.renderText(self.star_map.textSize, text, 1, (0xEF, 0xEF, 0xEF))
-            mapSurf.blit(textSrfc, (left+2,top+1))
+            mapSurf.blit(textSrfc, (left+2,top+1), special_flags = pygame.BLEND_ALPHA_SDL2)
 
     def drawPopups(self, surface):
         # draw popups
@@ -233,7 +233,7 @@ class StarMapWidget(Widget):
                     tmpY = y + 1
                     for item in info:
                         textSrfc = Fonts.renderText('normal', item, 1, fg)
-                        surface.blit(textSrfc, (x, tmpY))
+                        surface.blit(textSrfc, (x, tmpY), special_flags = pygame.BLEND_ALPHA_SDL2)
                         tmpY += textSrfc.get_height()
                     x += width + 2
 
@@ -269,11 +269,11 @@ class StarMapWidget(Widget):
             if rng > 1:
                 pygame.draw.circle(surface, (0x70, 0x70, 0x80), (sx, sy), rng, 1)
                 textSrfc = Fonts.renderText(self.star_map.textSize, res.formatTime(i * 6), 1, (0x70, 0x70, 0x80), (0x00, 0x00, 0x00))
-                surface.blit(textSrfc, (sx - rng, sy - textSrfc.get_height() / 2))
-                surface.blit(textSrfc, (sx + rng, sy - textSrfc.get_height() / 2))
-                surface.blit(textSrfc, (sx - textSrfc.get_width() / 2, sy - rng))
-                surface.blit(textSrfc, (sx - textSrfc.get_width() / 2, sy + rng - textSrfc.get_height()))
-        rng = int(max(maxRange * self.star_map.scale, 0.2 * self.star_map.scale))
+                surface.blit(textSrfc, (sx - rng, sy - textSrfc.get_height() / 2), special_flags = pygame.BLEND_ALPHA_SDL2)
+                surface.blit(textSrfc, (sx + rng, sy - textSrfc.get_height() / 2), special_flags = pygame.BLEND_ALPHA_SDL2)
+                surface.blit(textSrfc, (sx - textSrfc.get_width() / 2, sy - rng), special_flags = pygame.BLEND_ALPHA_SDL2)
+                surface.blit(textSrfc, (sx - textSrfc.get_width() / 2, sy + rng - textSrfc.get_height()), special_flags = pygame.BLEND_ALPHA_SDL2)
+        rng = int(max(maxRange * self.star_map.scale, 0.2 * self.star_map.scale), special_flags = pygame.BLEND_ALPHA_SDL2)
         if rng > 1:
             pygame.draw.circle(surface, (0xc0, 0x20, 0x20), (sx, sy), rng, 1)
 

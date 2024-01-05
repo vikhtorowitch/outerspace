@@ -273,7 +273,7 @@ class Grid(object):
         surface.fill(color, (1, 1, 12, height - 2))
         font.set_bold(1)
         text = font.render(str(tech.level), 1, (0x00, 0x00, 0x00))
-        surface.blit(text, (2 + (12 - text.get_width()) / 2, (height - text.get_height()) / 2))
+        surface.blit(text, (2 + (12 - text.get_width()) / 2, (height - text.get_height()) / 2), special_flags = pygame.BLEND_ALPHA_SDL2)
         # tech name
         font.set_bold(0)
         if tech.researchDisables:
@@ -282,7 +282,7 @@ class Grid(object):
             text = font.render(self.get_description(tech), 1, hForeground)
         else:
             text = font.render(self.get_description(tech), 1, foreground)
-        surface.blit(text, (15, (height - text.get_height()) / 2))
+        surface.blit(text, (15, (height - text.get_height()) / 2), special_flags = pygame.BLEND_ALPHA_SDL2)
         return surface
 
     def print_SDL(self):
@@ -307,7 +307,7 @@ class Grid(object):
         # draw tree
         for node in self.get_list():
             node_surface = self.render_node(node.tech, width, height)
-            surface.blit(node_surface, (node.column * node_width, node.row * node_height))
+            surface.blit(node_surface, (node.column * node_width, node.row * node_height), special_flags = pygame.BLEND_ALPHA_SDL2)
             parent = node.parent
             if parent.tech is None:
                 continue
@@ -323,7 +323,7 @@ class Grid(object):
             try:
                 impr = node.tech.researchRequires[0][1]
                 text = font.render(str(impr), 1, foreground)
-                surface.blit(text, (node.column * node_width - text.get_width() - 1, node.row * node_height))
+                surface.blit(text, (node.column * node_width - text.get_width() - 1, node.row * node_height), special_flags = pygame.BLEND_ALPHA_SDL2)
             except IndexError:
                 continue
         return surface
