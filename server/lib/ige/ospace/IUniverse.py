@@ -64,6 +64,7 @@ class IUniverse(IObject):
 
     @public(Const.AL_NONE)
     def getIntroInfo(self, tran, obj):
+        log.debug('getIntroInfo tran:', tran)
         result = IDataHolder()
         result.cid = tran.cid
         result.turn = obj.turn
