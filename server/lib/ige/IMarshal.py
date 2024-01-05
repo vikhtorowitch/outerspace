@@ -51,25 +51,56 @@ class IPacket:
         result += '>'
         return result
 
+def deunicodify_hook(pairs):
+    new_pairs = []
+    for key, value in pairs:
+        if isinstance(value, unicode):
+            value = value.encode('utf-8')
+        if isinstance(key, unicode):
+            key = key.encode('utf-8')
+        new_pairs.append((key, value))
+    return dict(new_pairs)
+
 class IMarshal:
 
     def __init__(self):
         pass
 
-    def encode(self, data, version = "V20"):
-        if version == "V20":
-            compressed = json.dumps(data, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+    def encode(self, data, version = "V21"):
+        if version == "V21":
+            json_dict = {}
+            json_dict['sid'] = data.sid
+            json_dict['method'] = data.method
+            json_dict['params'] = data.params
+            json_dict['result'] = data.result
+            json_dict['messages'] = data.messages
+            json_dict['exception'] = data.exception
+
+            if hasattr(data, 'clientAddr'):
+                json_dict['clientAddr'] = data.clientAddr
+            else:
+                json_dict['clientAddr'] = None
+            
+            compressed = json.dumps(json_dict, default=lambda o: o.__dict__, sort_keys=True, indent=4)
             log.debug('encode', compressed)
-            return "V20%s" % zlib.compress(compressed)
+            return "V21%s" % zlib.compress(compressed)
         else:
             raise EncodeException("Cannot handle version %s." % version)
 
     def decode(self, str):
         prefix = str[:3]
-        if prefix == u'V20':
+        if prefix == u'V21':
             decompressed = zlib.decompress(str[3:])
             log.debug('decompressed', decompressed)
-            data = json.loads(decompressed, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
+            data_json = json.loads(decompressed, object_pairs_hook=deunicodify_hook)
+            data = IPacket()
+            data.sid = data_json['sid']
+            data.method = data_json['method']
+            data.params = data_json['params']
+            data.result = data_json['result']
+            data.messages = data_json['messages']
+            data.exception = data_json['exception']
+            data.clientAddr = data_json['clientAddr']
             log.debug('dejsoned', data)
         else:
             raise DecodeException('Cannot handle version %s [message: %s]' % (prefix, str))

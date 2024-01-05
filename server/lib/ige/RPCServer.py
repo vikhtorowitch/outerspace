@@ -58,6 +58,7 @@ class igerpc(igerpc_handler.igerpc_handler):
         global running
 
         try:
+            log.debug('RPC packet: ', packet)
             params = [packet.sid]
             params.extend(packet.params)
             packet.result, packet.messages = callMap[intern(packet.method)](*params)
