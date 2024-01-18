@@ -366,6 +366,12 @@ def techtree(filename, races):
 
     pygame.image.save(grid.print_SDL(), filename + ".png")
 
+    _original_InstallNSApplication = pygame.sdlmain_osx.InstallNSApplication
+    def installNSApplication(icon):
+        print("InstallNSApplication") 
+        return _original_InstallNSApplication()
+    pygame.sdlmain_osx.InstallNSApplication = installNSApplication
+
 pygame.init()
 techtree("techtree", "BCH")
 techtree("techtree_bionic", "B")

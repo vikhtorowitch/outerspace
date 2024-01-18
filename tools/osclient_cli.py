@@ -194,6 +194,12 @@ elif options.chronicler:
     osci.client.cmdProxy.selectAdmin()
     osci.client.updateDatabase()
 
+    _original_InstallNSApplication = pygame.sdlmain_osx.InstallNSApplication
+    def installNSApplication(icon):
+        print("InstallNSApplication") 
+        return _original_InstallNSApplication()
+    pygame.sdlmain_osx.InstallNSApplication = installNSApplication
+
     pygame.init()
     screen = pygame.display.set_mode((10,10))
     osci.res.initialize()

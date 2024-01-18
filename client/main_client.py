@@ -51,6 +51,9 @@ except ImportError:
 import pygame.image, pygame.ftfont, pygame.time, pygame.version
 import pygame.transform
 
+import pygame.sdlmain_osx
+import pygame.pkgdata
+
 from osci.config import Config
 import osci.gdata as gdata
 import ige.version
@@ -59,6 +62,21 @@ import osci
 import resources
 import osci.res
 
+_original_getResource = pygame.pkgdata.getResource
+_original_InstallNSApplication = pygame.sdlmain_osx.InstallNSApplication
+
+def getResource(identifier, *args, **kwargs):
+    print(identifier) 
+    if(identifier == 'pygame_icon.tiff'):
+        print('pygame_icon.tiff')
+        raise IOError()
+    return _original_getResource(identifier, *args, **kwargs)
+
+
+def installNSApplication(icon):
+    print("InstallNSApplication") 
+    return _original_InstallNSApplication()
+ 
 
 
 def defineBackground():
@@ -221,6 +239,10 @@ def runClient(options):
 
     tran.install(unicode = 1)
 
+    
+
+    pygame.sdlmain_osx.InstallNSApplication = installNSApplication
+    pygame.pkgdata.getResource = getResource
 
     #initialize pygame and prepare screen
     if (gdata.config.defaults.sound == "yes") or (gdata.config.defaults.music == "yes"):
@@ -229,7 +251,7 @@ def runClient(options):
     os.environ['SDL_VIDEO_ALLOW_SCREENSAVER'] = '1'
     os.environ['SDL_DEBUG'] = '1'
     pygame.init()
-
+    pygame.sdlmain_osx.InstallNSApplication = installNSApplication
     flags = pygame.SWSURFACE
 
     DEFAULT_SCRN_SIZE = (800, 600)
@@ -241,11 +263,13 @@ def runClient(options):
             width, height = gdata.config.display.resolution.split('x')
             gdata.scrnSize = (int(width), int(height))
 
-    if gdata.config.display.depth == None:
-            # guess best depth
-            bestdepth = pygame.display.mode_ok(gdata.scrnSize, flags)
-    else:
-            bestdepth = int(gdata.config.display.depth)
+    # if gdata.config.display.depth == None:
+    #         # guess best depth
+    #         bestdepth = pygame.display.mode_ok(gdata.scrnSize, flags)
+    # else:
+    #         bestdepth = int(gdata.config.display.depth)
+
+    bestdepth = 0
 
     # initialize screen
     try:
